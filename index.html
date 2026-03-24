@@ -727,13 +727,13 @@ footer span:first-child{font-family:'Playfair Display',serif;font-style:italic;c
         </div>
         <div class="pbody">
           <p class="ptype" style="color:#F87171">Forensics &amp; Detection</p>
-          <p class="ptitle">AI-Generated Video Detector</p>
-          <p class="pdesc">As AI video generation gets better, so does the need to detect it. Built a deep learning pipeline to distinguish synthetic video from real footage using spatial and temporal features.</p>
+          <p class="ptitle">Generator-Agnostic AI Video Detector</p>
+          <p class="pdesc">Most detectors fail when a new AI generator appears — they learn the generator's fingerprint, not the artifact. This project targets the harder, more durable problem: detecting AI-generated video through genuine temporal and visual artifact reasoning, regardless of source.</p>
           <ul class="pbuls">
-            <li>End-to-end pipeline: dataset preprocessing, feature extraction, model training, evaluation</li>
-            <li>Systematic ablation studies and optimization across architectures</li>
-            <li>OpenCV-based temporal and spatial frame-level analysis for artifact detection</li>
-          </ul>
+            <li>Manually curated dataset spanning humans, animals, landscapes, and real footage with AI modifications — designed to prevent shortcut learning and force generalization</li>
+            <li>Model interpretability validated via Grad-CAM and frequency analysis, confirming the model attends to real artifact regions rather than generator-specific noise</li>
+            <li>End-to-end pipeline with systematic ablation studies; architecture optimized for artifact-level reasoning over superficial pattern matching</li>
+          </ul
           <div class="ptechs">
             <span class="ptag">Python</span><span class="ptag">PyTorch</span><span class="ptag">OpenCV</span><span class="ptag">GitHub</span>
           </div>
