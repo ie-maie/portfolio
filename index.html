@@ -3,870 +3,622 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wiam Bouimejane — AI &amp; Data Science</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Wiam Bouimejane — AI & Data Science</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --ink:#0A0B0F;
-  --ink2:#13151C;
-  --ink3:#1A1D27;
-  --seam:#252836;
-  --fog:#7B8099;
-  --mist:#B0B6CC;
-  --paper:#F7F6F2;
-  --paper2:#EFEEE8;
-  --paper3:#E6E4DC;
-  --ink-text:#1C1E28;
-  --ink-muted:#5C6078;
-  --teal:#2DD4BF;
-  --teal-dim:rgba(45,212,191,.12);
-  --teal-border:rgba(45,212,191,.22);
-  --amber:#F59E0B;
-  --amber-dim:rgba(245,158,11,.1);
-  --rose:#F43F5E;
-  --rose-dim:rgba(244,63,94,.1);
-  --violet:#7C3AED;
-  --violet-dim:rgba(124,58,237,.1);
-  --white:#FFFFFF;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+html { scroll-behavior: smooth }
+:root {
+  --bg:#07080A; --surface:#12141C; --raised:#0E1017;
+  --border:rgba(250,248,245,.08); --acid:#D3FF00; --acid-dim:rgba(211,255,0,.1);
+  --snow:#FAF8F5; --fog:#8A8D9B;
+  --mono:'Geist Mono',monospace; --display:'Outfit',sans-serif; --body:'Geist',sans-serif;
 }
-html{scroll-behavior:smooth}
-body{font-family:'Epilogue',sans-serif;background:var(--ink);color:#D4D7E3;line-height:1.7;overflow-x:hidden;font-size:16px}
+body { font-family:var(--body); background:var(--bg); color:var(--snow); overflow-x:hidden; cursor:none }
+
+/* CURSOR */
+#cur{position:fixed;z-index:9999;pointer-events:none;width:10px;height:10px;border-radius:50%;background:var(--acid);transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .15s,height .15s}
+#cur-ring{position:fixed;z-index:9998;pointer-events:none;width:36px;height:36px;border-radius:50%;border:1px solid rgba(211,255,0,.35);transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+body.hov #cur{width:18px;height:18px}
+body.hov #cur-ring{width:54px;height:54px;border-color:rgba(211,255,0,.7)}
 
 /* NAV */
-nav{
-  position:fixed;inset:0 0 auto;z-index:300;height:56px;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 5vw;
-  border-bottom:1px solid var(--seam);
-  background:rgba(10,11,15,.9);
-  backdrop-filter:blur(20px);
-}
-.nlogo{
-  font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;
-  color:var(--white);text-decoration:none;letter-spacing:.01em;
-}
-.nlogo em{font-style:italic;color:var(--teal)}
-.nlinks{display:flex;gap:2.2rem;list-style:none}
-.nlinks a{
-  font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--fog);text-decoration:none;font-weight:500;
-  transition:color .2s;
-}
-.nlinks a:hover{color:var(--teal)}
+nav{position:fixed;inset:0 0 auto;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5vw;border-bottom:1px solid var(--border);background:rgba(7,8,10,.9);backdrop-filter:blur(20px)}
+.nav-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.nav-badge{background:var(--acid-dim);font-family:var(--mono);font-size:.62rem;font-weight:600;color:var(--acid);padding:3px 8px;border-radius:6px;letter-spacing:.05em}
+.nav-name{font-family:var(--display);font-size:1rem;font-weight:700;color:var(--snow)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--acid)}
+.nav-status{display:flex;align-items:center;gap:.5rem}
+.nav-pulse{width:8px;height:8px;border-radius:50%;background:var(--acid);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.nav-status-text{font-family:var(--mono);font-size:.62rem;color:var(--acid)}
 
 /* HERO */
-#hero{
-  min-height:100vh;display:grid;
-  grid-template-columns:1fr 420px;
-  gap:0;align-items:center;
-  padding:80px 5vw 60px;
-  position:relative;overflow:hidden;
-}
-.hero-bg-geo{
-  position:absolute;inset:0;pointer-events:none;overflow:hidden;
-}
-.hero-left{position:relative;z-index:2;max-width:620px}
-.hero-overline{
-  font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--teal);font-weight:600;margin-bottom:1.6rem;
-  display:flex;align-items:center;gap:12px;
-}
-.hero-overline::before{content:'';width:28px;height:1px;background:var(--teal);display:block}
-h1{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(3rem,5.5vw,5rem);
-  font-weight:900;line-height:1.05;
-  color:var(--white);
-  margin-bottom:1.6rem;
-  letter-spacing:-.02em;
-}
-h1 .italic{font-style:italic;color:var(--teal)}
-.hero-desc{
-  font-size:1.05rem;color:var(--fog);max-width:500px;
-  margin-bottom:2.6rem;line-height:1.9;font-weight:300;
-}
-.hero-desc strong{color:var(--mist);font-weight:500}
-.cta-row{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:3.5rem}
-.btn{
-  display:inline-block;text-decoration:none;cursor:pointer;border:none;
-  font-family:'Epilogue',sans-serif;font-size:.82rem;font-weight:600;
-  letter-spacing:.06em;text-transform:uppercase;
-  padding:.75rem 1.8rem;border-radius:4px;transition:all .22s;
-}
-.btn-teal{background:var(--teal);color:var(--ink)}
-.btn-teal:hover{background:#14b8a6;transform:translateY(-2px);box-shadow:0 8px 28px rgba(45,212,191,.25)}
-.btn-outline{background:transparent;color:var(--mist);border:1px solid var(--seam)}
-.btn-outline:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px)}
-.hero-stats{
-  display:flex;gap:2.8rem;padding-top:2.4rem;
-  border-top:1px solid var(--seam);flex-wrap:wrap;
-}
-.hstat .n{
-  font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;
-  color:var(--white);display:block;line-height:1;margin-bottom:4px;
-}
-.hstat .l{font-size:.72rem;color:var(--fog);letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 5vw 80px;overflow:hidden}
+.hero-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 50% 60% at 75% 30%,rgba(211,255,0,.05) 0%,transparent 70%)}
+.hero-grid{display:flex;gap:4rem;align-items:center;position:relative;z-index:1}
+.hero-left{flex:1;min-width:0}
+.hero-right{width:360px;flex-shrink:0}
 
-.hero-right{
-  position:relative;z-index:2;
-  display:flex;align-items:center;justify-content:center;
-}
+.hero-eyebrow{display:inline-flex;align-items:center;background:var(--acid-dim);font-family:var(--mono);font-size:.68rem;font-weight:600;color:var(--acid);padding:4px 12px;border-radius:100px;letter-spacing:.08em;margin-bottom:1.5rem;opacity:0;animation:fadeUp .7s .2s ease forwards}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+h1{font-family:var(--display);font-size:clamp(4rem,10vw,9rem);font-weight:900;line-height:.9;color:var(--snow);letter-spacing:-.03em;margin-bottom:.5rem;overflow:hidden}
+.h1-line{display:block;overflow:hidden}
+.h1-line span{display:block;transform:translateY(110%);animation:slideUp .9s cubic-bezier(.16,1,.3,1) forwards}
+.h1-line:nth-child(1) span{animation-delay:.3s}
+.h1-line:nth-child(2) span{animation-delay:.45s}
+@keyframes slideUp{to{transform:translateY(0)}}
+.acid{color:var(--acid)}
 
-/* ABOUT */
-#about{
-  background:var(--ink2);
-  padding:100px 5vw;
-}
-.about-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
-.section-tag{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:.8rem;display:flex;align-items:center;gap:10px}
-.section-tag::before{content:'';width:18px;height:1px;background:var(--teal);display:block}
-h2{font-family:'Playfair Display',serif;font-weight:700;line-height:1.15;letter-spacing:-.01em}
-.about-left h2{font-size:clamp(1.8rem,2.8vw,2.6rem);color:var(--white);margin-bottom:1.5rem}
-.about-left p{color:var(--fog);font-size:.97rem;line-height:1.9;margin-bottom:1rem;font-weight:300}
-.about-left p strong{color:var(--mist);font-weight:500}
-.about-right{}
-.about-card{
-  background:var(--ink3);border:1px solid var(--seam);
-  border-radius:12px;padding:1.6rem;margin-bottom:1rem;
-}
-.ac-label{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fog);font-weight:600;margin-bottom:.8rem}
-.ac-items{display:flex;flex-wrap:wrap;gap:.45rem}
-.ac-item{
-  font-size:.78rem;padding:4px 12px;border-radius:3px;
-  background:var(--ink);color:var(--mist);
-  border:1px solid var(--seam);font-weight:400;
-}
-.ac-item.hl{border-color:var(--teal-border);color:var(--teal);background:var(--teal-dim)}
-.edu-row{display:flex;justify-content:space-between;align-items:start;padding:.75rem 0;border-bottom:1px solid var(--seam)}
-.edu-row:last-child{border-bottom:none}
-.edu-deg{font-size:.9rem;color:var(--white);font-weight:500}
-.edu-inst{font-size:.78rem;color:var(--fog);margin-top:2px}
-.edu-yr{font-size:.75rem;color:var(--teal);font-weight:600;white-space:nowrap;padding-top:2px}
+.hero-sub{font-family:var(--mono);font-size:.75rem;font-weight:600;color:var(--fog);letter-spacing:.05em;text-transform:uppercase;margin-bottom:1.4rem;margin-top:.6rem;opacity:0;animation:fadeUp .7s .6s ease forwards}
+.hero-desc{font-family:var(--body);font-size:1rem;color:var(--snow);line-height:1.7;max-width:580px;margin-bottom:2rem;opacity:0;animation:fadeUp .7s .75s ease forwards}
+.hero-desc strong{color:var(--acid)}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp .7s .9s ease forwards}
+.btn{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.75rem 1.6rem;border-radius:100px;text-decoration:none;cursor:none;border:none;transition:all .2s;display:inline-block}
+.btn-acid{background:var(--acid);color:var(--bg)}
+.btn-acid:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(211,255,0,.3)}
+.btn-ghost{background:transparent;color:var(--snow);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--acid);color:var(--acid);transform:translateY(-2px)}
+
+.tele-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.8rem;opacity:0;animation:fadeUp .8s 1s ease forwards}
+.tele-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem}
+.tele-label{font-family:var(--mono);font-size:.6rem;color:var(--acid)}
+.tele-acc{font-family:var(--mono);font-size:.6rem;color:var(--fog)}
+.tele-vis{background:var(--raised);border-radius:8px;padding:1rem;margin-bottom:1.2rem;display:flex;flex-direction:column;gap:.5rem}
+.tele-row{display:flex;gap:.4rem}
+.tele-bar{height:8px;border-radius:2px;transition:width .8s ease}
+.tele-code{font-family:var(--mono);font-size:.62rem;color:var(--fog);line-height:1.7}
+
+/* TELEMETRY STRIP */
+.tele-strip{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;padding:1.8rem 5vw;flex-wrap:wrap;gap:2rem}
+.ts-col{display:flex;flex-direction:column;gap:4px}
+.ts-label{font-family:var(--mono);font-size:.62rem;color:var(--fog)}
+.ts-value{font-family:var(--display);font-size:1.8rem;font-weight:800;color:var(--acid)}
+.ts-sub{font-family:var(--mono);font-size:.58rem;color:var(--fog)}
+
+/* SECTIONS */
+.section{padding:7rem 5vw}
+.section-header{margin-bottom:3.5rem}
+.section-badge{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem}
+.section-dot{width:8px;height:8px;background:var(--acid);flex-shrink:0}
+.section-num{font-family:var(--mono);font-size:.62rem;font-weight:600;color:var(--acid);letter-spacing:.1em;text-transform:uppercase}
+.section-title{font-family:var(--display);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;color:var(--snow);margin-bottom:.7rem}
+.section-desc{font-family:var(--body);font-size:.95rem;color:var(--fog);line-height:1.6;max-width:640px}
+.section-rule{width:100%;height:1px;background:var(--border);margin-top:1.5rem}
+
+/* EXPLORING */
+#exploring{background:var(--bg)}
+.explore-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.explore-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.8rem;display:flex;flex-direction:column;gap:1.2rem;transition:border-color .2s,transform .2s}
+.explore-card:hover{border-color:rgba(211,255,0,.3);transform:translateY(-3px)}
+.ec-top{display:flex;justify-content:space-between;align-items:center}
+.ec-num{font-family:var(--mono);font-size:.62rem;color:var(--acid)}
+.ec-title{font-family:var(--display);font-size:1.1rem;font-weight:600;color:var(--snow);margin-bottom:.4rem}
+.ec-question{font-family:var(--body);font-size:.875rem;color:var(--acid);line-height:1.4}
+.ec-body{font-family:var(--body);font-size:.8rem;color:var(--fog);line-height:1.6}
 
 /* PROJECTS */
-#projects{background:var(--ink);padding:100px 5vw}
-.projects-inner{max-width:1080px;margin:0 auto}
-.proj-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3.5rem;flex-wrap:wrap;gap:1rem}
-.proj-header h2{font-size:clamp(1.8rem,2.8vw,2.6rem);color:var(--white)}
-.proj-count{font-size:.75rem;color:var(--fog);letter-spacing:.1em;text-transform:uppercase}
-.proj-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+#projects{background:var(--raised)}
+.proj-stack{display:flex;flex-direction:column;gap:1.2rem}
 
-.pcard{
-  background:var(--ink2);
-  border:1px solid var(--seam);
-  border-radius:14px;overflow:hidden;
-  transition:transform .25s,border-color .25s,box-shadow .25s;
-  display:flex;flex-direction:column;
-}
-.pcard:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
-.pcard.featured{grid-column:span 2}
-.pcard:hover.teal-card{border-color:var(--teal-border);box-shadow:0 20px 50px rgba(45,212,191,.08)}
-.pcard:hover.amber-card{border-color:rgba(245,158,11,.25);box-shadow:0 20px 50px rgba(245,158,11,.08)}
-.pcard:hover.rose-card{border-color:rgba(244,63,94,.25);box-shadow:0 20px 50px rgba(244,63,94,.08)}
-.pcard:hover.violet-card{border-color:rgba(124,58,237,.25);box-shadow:0 20px 50px rgba(124,58,237,.08)}
+.proj-featured{background:var(--surface);border:1.5px solid var(--acid);border-radius:24px;padding:2rem;display:grid;grid-template-columns:1fr 320px;gap:2.5rem;transition:box-shadow .3s}
+.proj-featured:hover{box-shadow:0 0 48px rgba(211,255,0,.07)}
+.proj-tag{display:flex;align-items:center;gap:.5rem;margin-bottom:1.4rem}
+.proj-tag-dot{width:8px;height:8px;background:var(--acid);flex-shrink:0}
+.proj-tag-text{font-family:var(--mono);font-size:.62rem;font-weight:600;color:var(--acid);letter-spacing:.08em;text-transform:uppercase}
+.proj-title{font-family:var(--display);font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:700;color:var(--snow);margin-bottom:.5rem;line-height:1.1}
+.proj-subtitle{font-family:var(--body);font-size:.95rem;color:var(--acid);margin-bottom:1rem;line-height:1.4}
+.proj-desc{font-family:var(--body);font-size:.86rem;color:var(--fog);line-height:1.65;margin-bottom:1.2rem}
+.proj-buls{list-style:none;margin-bottom:1.2rem}
+.proj-buls li{font-family:var(--body);font-size:.82rem;color:var(--fog);padding:.28rem 0 .28rem 1rem;position:relative;line-height:1.6;border-bottom:1px solid var(--border)}
+.proj-buls li:last-child{border-bottom:none}
+.proj-buls li::before{content:'→';position:absolute;left:0;color:var(--acid);font-size:.68rem;top:.32rem}
+.proj-quote{font-family:var(--body);font-size:.8rem;color:var(--fog);font-style:italic;margin-top:.8rem}
+.tech-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem}
+.tech-tag{background:var(--raised);border:1px solid var(--border);font-family:var(--mono);font-size:.62rem;color:var(--snow);padding:3px 9px;border-radius:6px}
 
-/* card visual */
-.pvis{height:200px;position:relative;overflow:hidden;flex-shrink:0}
-.featured .pvis{height:260px}
-.pvis svg{width:100%;height:100%;display:block}
-.pvis-label{
-  position:absolute;top:16px;left:18px;
-  font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
-  font-weight:600;padding:4px 10px;border-radius:3px;
-}
-.pvis-status{
-  position:absolute;top:16px;right:18px;
-  font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;
-  font-weight:600;padding:4px 10px;border-radius:3px;
-  background:rgba(10,11,15,.7);border:1px solid var(--seam);color:var(--fog);
-}
-.pvis-status.live{color:var(--teal);border-color:var(--teal-border);background:var(--teal-dim)}
+.proj-right-tele{background:var(--raised);border:1px solid var(--border);border-radius:16px;padding:1.4rem;display:flex;flex-direction:column;gap:1rem}
+.prt-header{display:flex;justify-content:space-between}
+.prt-label{font-family:var(--mono);font-size:.58rem;color:var(--acid)}
+.prt-meta{font-family:var(--mono);font-size:.58rem;color:var(--fog)}
+.prt-metrics{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.prt-metric{background:var(--surface);border-radius:8px;padding:.9rem}
+.prt-metric-label{font-family:var(--mono);font-size:.55rem;color:var(--fog);margin-bottom:.3rem}
+.prt-metric-value{font-family:var(--display);font-size:1.6rem;font-weight:700}
+.loss-label{font-family:var(--mono);font-size:.55rem;color:var(--fog);margin-bottom:.4rem}
+.loss-bars{display:flex;align-items:flex-end;gap:3px;height:40px}
+.loss-bar{flex:1;border-radius:2px;background:var(--acid)}
 
-.pbody{padding:1.6rem 1.8rem;flex:1;display:flex;flex-direction:column}
-.featured .pbody{padding:2rem 2.2rem}
-.ptype{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;font-weight:600;margin-bottom:.6rem}
-.ptitle{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--white);margin-bottom:.7rem;line-height:1.25}
-.featured .ptitle{font-size:1.55rem}
-.pdesc{font-size:.9rem;color:var(--fog);line-height:1.8;margin-bottom:1.1rem;font-weight:300}
-.pub-badge{
-  display:inline-flex;align-items:center;gap:7px;
-  font-size:.75rem;font-weight:600;
-  padding:5px 12px;border-radius:3px;margin-bottom:1rem;
-  background:rgba(45,212,191,.1);color:var(--teal);
-  border:1px solid var(--teal-border);
-  text-decoration:none;width:fit-content;
-  transition:background .2s;
-}
-.pub-badge:hover{background:rgba(45,212,191,.18)}
-.pub-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);display:block}
-.pbuls{list-style:none;margin-bottom:1.2rem;flex:1}
-.pbuls li{
-  font-size:.855rem;color:var(--fog);
-  padding:.22rem 0 .22rem 1.1rem;
-  position:relative;line-height:1.7;border-bottom:1px solid var(--seam);
-  font-weight:300;
-}
-.pbuls li:last-child{border-bottom:none}
-.pbuls li::before{
-  content:'';position:absolute;left:0;top:.7rem;
-  width:5px;height:1px;background:currentColor;opacity:.6;
-}
-.ptechs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:auto;padding-top:1rem;border-top:1px solid var(--seam)}
-.ptag{font-size:.7rem;padding:3px 10px;border-radius:3px;background:var(--ink3);color:var(--fog);border:1px solid var(--seam);font-weight:400}
+.pub-badge{display:flex;align-items:center;gap:.5rem;margin-bottom:.9rem}
+.pub-dot{width:6px;height:6px;border-radius:50%;background:#6ECC9A;flex-shrink:0}
+.pub-text{font-family:var(--mono);font-size:.62rem;color:#6ECC9A}
+
+.proj-secondary{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.proj-sub{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.6rem;display:flex;flex-direction:column;gap:1rem;transition:border-color .25s,transform .25s}
+.proj-sub:hover{border-color:rgba(211,255,0,.2);transform:translateY(-3px)}
+.ps-header{display:flex;justify-content:space-between;align-items:center}
+.ps-run{font-family:var(--mono);font-size:.62rem;color:var(--acid)}
+.ps-meta{font-family:var(--mono);font-size:.6rem;color:var(--fog)}
+.ps-title{font-family:var(--display);font-size:1.15rem;font-weight:600;color:var(--snow)}
+.ps-tagline{font-family:var(--body);font-size:.8rem;color:var(--fog);margin-top:2px}
+.ps-desc{font-family:var(--body);font-size:.8rem;color:var(--fog);line-height:1.6}
+.ps-rule{height:1px;background:var(--border)}
+.ps-quote{font-family:var(--body);font-size:.76rem;color:var(--fog);font-style:italic}
+.ps-ongoing{font-family:var(--mono);font-size:.58rem;color:#F59E0B;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);padding:2px 7px;border-radius:3px}
+
+/* INTERSTITIAL */
+.interstitial{background:var(--raised);border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9rem 5vw;text-align:center;gap:1.8rem}
+.inter-text{font-family:var(--display);font-size:clamp(2rem,5vw,4rem);font-weight:700;line-height:1.2}
+.inter-text span{display:block}
+.inter-bar{display:flex;align-items:center;gap:.8rem}
+.inter-line{width:24px;height:2px;background:var(--acid)}
+.inter-label{font-family:var(--mono);font-size:.62rem;color:var(--fog)}
+
+/* ABOUT */
+#about{background:var(--bg)}
+.about-grid{display:grid;grid-template-columns:1fr 400px;gap:3rem;align-items:start}
+.about-h{font-family:var(--display);font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:700;color:var(--snow);margin-bottom:1.4rem}
+.about-p{font-family:var(--body);font-size:.93rem;color:var(--fog);line-height:1.7;margin-bottom:.9rem}
+.about-p strong{color:var(--snow)}
+.about-specimen{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-top:1.4rem;display:flex;gap:.7rem;align-items:flex-start}
+.spec-label{font-family:var(--mono);font-size:.58rem;color:var(--acid);white-space:nowrap;padding-top:2px}
+.spec-text{font-family:var(--body);font-size:.82rem;color:var(--snow);line-height:1.5;font-style:italic}
+.edu-block{margin-top:1.8rem}
+.edu-label{font-family:var(--mono);font-size:.6rem;color:var(--acid);margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:1px solid var(--border);letter-spacing:.1em;text-transform:uppercase}
+.edu-row{display:flex;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid var(--border);font-family:var(--body);font-size:.85rem;color:var(--fog)}
+.edu-row:last-child{border-bottom:none}
+.edu-row span{font-family:var(--mono);font-size:.6rem;color:var(--acid)}
+
+.about-right{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:2rem}
+.ar-label{font-family:var(--mono);font-size:.62rem;color:var(--acid);margin-bottom:1.4rem;letter-spacing:.1em}
+.ar-behaviors{display:flex;flex-direction:column;gap:.9rem;margin-bottom:1.4rem}
+.ar-beh{display:flex;align-items:center;gap:.9rem}
+.ar-arr{font-family:var(--mono);font-size:.8rem;color:var(--acid);flex-shrink:0}
+.ar-text{font-family:var(--body);font-size:.9rem;color:var(--snow);font-weight:500}
+.ar-rule{height:1px;background:var(--border);margin-bottom:1.1rem}
+.ar-status{display:flex;align-items:center;gap:.6rem}
+.ar-status-dot{width:8px;height:8px;border-radius:50%;background:var(--acid);opacity:.7}
+.ar-status-text{font-family:var(--mono);font-size:.62rem;color:var(--fog)}
 
 /* SKILLS */
-#skills{background:var(--paper);color:var(--ink-text);padding:100px 5vw}
-#skills .section-tag{color:var(--teal)}
-#skills .section-tag::before{background:var(--teal)}
-.skills-inner{max-width:1080px;margin:0 auto}
-#skills h2{color:var(--ink-text);font-size:clamp(1.8rem,2.8vw,2.6rem);margin-bottom:3rem}
-.skills-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:start}
+#skills{background:var(--raised)}
+.skills-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem}
 .sk-group{margin-bottom:2rem}
-.sk-group-title{
-  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
-  font-weight:700;color:var(--teal);margin-bottom:1rem;
-}
-.sk-item{display:flex;align-items:center;gap:12px;margin-bottom:.7rem}
-.sk-item:last-child{margin-bottom:0}
-.sk-name{font-size:.88rem;color:var(--ink-text);min-width:150px;font-weight:400}
-.sk-bar{flex:1;height:2px;background:var(--paper3);border-radius:2px;overflow:hidden}
-.sk-bar-fill{height:100%;background:linear-gradient(90deg,var(--teal),#14b8a6 80%);border-radius:2px;transition:width 1.2s ease}
-.sk-pct{font-size:.72rem;color:var(--ink-muted);min-width:30px;text-align:right}
-.sk-right{}
-.sk-block{background:var(--white);border:1px solid var(--paper3);border-radius:10px;padding:1.4rem;margin-bottom:1rem}
-.sk-block-title{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--ink-muted);margin-bottom:.8rem}
-.sk-tags{display:flex;flex-wrap:wrap;gap:.4rem}
-.sktag{font-size:.78rem;padding:4px 11px;border-radius:3px;background:var(--paper2);color:var(--ink-muted);border:1px solid var(--paper3)}
-
-/* CERTS */
-#certs{background:var(--paper2);padding:80px 5vw}
-.certs-inner{max-width:1080px;margin:0 auto}
-#certs h2{color:var(--ink-text);font-size:clamp(1.5rem,2.2vw,2rem);margin-bottom:2.5rem}
-.certs-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-.cert{background:var(--white);border:1px solid var(--paper3);border-radius:10px;padding:1.3rem 1.4rem;transition:transform .2s,box-shadow .2s}
-.cert:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.07)}
-.cert-org{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:.5rem}
-.cert-name{font-size:.875rem;color:var(--ink-text);font-weight:500;line-height:1.45}
-.cert-yr{font-size:.72rem;color:var(--ink-muted);margin-top:.4rem}
+.sk-group-label{font-family:var(--mono);font-size:.6rem;color:var(--acid);margin-bottom:.8rem;letter-spacing:.1em;text-transform:uppercase}
+.sk-row{display:flex;align-items:center;gap:1rem;padding:.42rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.sk-row:last-of-type{border-bottom:none}
+.sk-name{font-family:var(--body);font-size:.875rem;color:var(--snow);min-width:155px}
+.sk-track{flex:1;height:1px;background:var(--border)}
+.sk-fill{height:100%;background:var(--acid);position:relative}
+.sk-fill::after{content:'';position:absolute;right:-1px;top:-3px;width:7px;height:7px;border-radius:50%;background:var(--acid);box-shadow:0 0 8px var(--acid)}
+.tool-item{font-family:var(--body);font-size:.875rem;color:var(--fog);padding:.42rem 0;border-bottom:1px solid rgba(255,255,255,.04);display:block}
+.tool-item:last-of-type{border-bottom:none}
+.cert-row{display:flex;justify-content:space-between;align-items:baseline;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.cert-row:last-child{border-bottom:none}
+.cert-n{font-family:var(--body);font-size:.875rem;color:var(--snow)}
+.cert-o{font-family:var(--mono);font-size:.58rem;color:var(--fog);margin-top:2px}
+.cert-y{font-family:var(--mono);font-size:.6rem;color:var(--acid);flex-shrink:0;margin-left:1rem}
 
 /* CONTACT */
-#contact{background:var(--ink2);padding:100px 5vw}
-.contact-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
-.contact-left h2{font-size:clamp(1.8rem,3vw,3rem);color:var(--white);margin-bottom:1rem;line-height:1.1}
-.contact-left h2 em{font-style:italic;color:var(--teal)}
-.contact-left p{color:var(--fog);font-size:.95rem;line-height:1.85;margin-bottom:2rem;font-weight:300}
-.clinks{}
-.clink{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:.9rem 0;border-bottom:1px solid var(--seam);
-  text-decoration:none;color:var(--fog);font-size:.9rem;
-  transition:color .2s;
-}
-.clink:first-child{border-top:1px solid var(--seam)}
-.clink:hover{color:var(--teal)}
-.clink-left{display:flex;align-items:center;gap:12px}
-.clink-icon{
-  width:32px;height:32px;border-radius:6px;
-  border:1px solid var(--seam);background:var(--ink3);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.clink-icon svg{width:14px;height:14px;fill:none;stroke:var(--fog);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke .2s}
-.clink:hover .clink-icon svg{stroke:var(--teal)}
-.clink-arr{font-size:.75rem;opacity:0;transition:opacity .2s;transform:translateX(-4px);transition:opacity .2s,transform .2s}
-.clink:hover .clink-arr{opacity:1;transform:none}
+#contact{background:var(--surface)}
+.contact-grid{display:grid;grid-template-columns:1fr 380px;gap:3rem;align-items:start}
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:2rem}
+.form-label{font-family:var(--mono);font-size:.62rem;color:var(--acid);margin-bottom:1.2rem;letter-spacing:.1em}
+.form-field{margin-bottom:.9rem}
+.form-field label{display:block;font-family:var(--mono);font-size:.6rem;color:var(--fog);margin-bottom:.35rem;letter-spacing:.08em;text-transform:uppercase}
+.form-field input,.form-field textarea{width:100%;padding:.75rem 1rem;background:var(--raised);border:1px solid var(--border);border-radius:8px;color:var(--snow);font-family:var(--body);font-size:.9rem;outline:none;transition:border-color .2s;resize:vertical}
+.form-field input::placeholder,.form-field textarea::placeholder{color:var(--fog)}
+.form-field input:focus,.form-field textarea:focus{border-color:var(--acid)}
+.form-field textarea{min-height:100px;line-height:1.6}
+.form-submit{background:var(--acid);color:var(--bg);border:none;font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 1.6rem;border-radius:100px;cursor:none;transition:all .2s;margin-top:.4rem}
+.form-submit:hover{transform:translateY(-2px);box-shadow:0 0 24px rgba(211,255,0,.25)}
+.channels-card{background:var(--raised);border:1px solid var(--border);border-radius:24px;padding:2rem}
+.ch-label{font-family:var(--mono);font-size:.62rem;color:var(--acid);margin-bottom:1.6rem;letter-spacing:.1em}
+.ch-list{display:flex;flex-direction:column;gap:1.4rem;margin-bottom:1.5rem}
+.ch-item{display:flex;align-items:center;gap:.9rem}
+.ch-icon{width:22px;height:22px;opacity:.55;flex-shrink:0}
+.ch-icon svg{width:100%;height:100%;fill:none;stroke:var(--snow);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ch-sub{font-family:var(--mono);font-size:.58rem;color:var(--fog)}
+.ch-val{font-family:var(--body);font-size:.9rem;color:var(--snow);font-weight:600;text-decoration:none;transition:color .2s;display:block}
+.ch-val:hover{color:var(--acid)}
+.ch-rule{height:1px;background:var(--border);margin-bottom:1.2rem}
+.ch-note{font-family:var(--body);font-size:.8rem;color:var(--fog);line-height:1.6}
 
-.cf{}
-.cf-field{margin-bottom:1rem}
-.cf-field label{display:block;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--fog);margin-bottom:.4rem}
-.cf-field input,.cf-field textarea{
-  width:100%;padding:.72rem 1rem;
-  background:var(--ink3);border:1px solid var(--seam);border-radius:6px;
-  color:var(--mist);font-family:'Epilogue',sans-serif;font-size:.93rem;
-  outline:none;transition:border-color .2s;resize:vertical;
-}
-.cf-field input:focus,.cf-field textarea:focus{border-color:var(--teal)}
-.cf-field textarea{min-height:110px;line-height:1.6}
-.cf-submit{
-  width:100%;padding:.82rem;background:var(--teal);color:var(--ink);
-  border:none;border-radius:6px;cursor:pointer;
-  font-family:'Epilogue',sans-serif;font-size:.82rem;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;
-  transition:background .2s,transform .2s;
-}
-.cf-submit:hover{background:#14b8a6;transform:translateY(-1px)}
-
-footer{
-  background:var(--ink);border-top:1px solid var(--seam);
-  padding:1.6rem 5vw;
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:.75rem;color:var(--fog);
-}
-footer span:first-child{font-family:'Playfair Display',serif;font-style:italic;color:var(--mist)}
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:1.8rem 5vw;flex-wrap:wrap;gap:1rem}
+.footer-left{display:flex;flex-direction:column;gap:3px}
+.footer-name{font-family:var(--display);font-size:1rem;font-weight:700;color:var(--snow)}
+.footer-tagline{font-family:var(--mono);font-size:.58rem;color:var(--fog)}
+.footer-right{display:flex;gap:2rem;align-items:center}
+.footer-right span{font-family:var(--mono);font-size:.6rem;color:var(--fog)}
+.footer-right .acid{color:var(--acid)}
 
 /* REVEAL */
-.rv{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
 .rv.in{opacity:1;transform:none}
-.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
 
-@media(max-width:900px){
-  #hero{grid-template-columns:1fr;padding-bottom:80px}
-  .hero-right{display:none}
-  .about-inner,.contact-inner{grid-template-columns:1fr;gap:3rem}
-  .skills-layout{grid-template-columns:1fr}
-  .proj-cards{grid-template-columns:1fr}
-  .pcard.featured{grid-column:span 1}
-  .certs-row{grid-template-columns:1fr 1fr}
-  .nlinks{gap:1.4rem}
-  nav{padding:0 4vw}
-  #hero,#about,#projects,#skills,#certs,#contact{padding-left:4vw;padding-right:4vw}
+@media(max-width:960px){
+  .hero-grid{flex-direction:column}
+  .hero-right{width:100%}
+  .explore-grid{grid-template-columns:1fr 1fr}
+  .proj-featured,.about-grid,.skills-grid,.contact-grid{grid-template-columns:1fr}
+  .proj-secondary{grid-template-columns:1fr}
+  nav{padding:1rem 4vw}
+  .nav-links{gap:1.2rem}
+  body{cursor:auto}
+  #cur,#cur-ring{display:none}
 }
-@media(max-width:520px){
-  .certs-row{grid-template-columns:1fr}
-  .hero-stats{gap:1.5rem}
+@media(max-width:540px){
+  .explore-grid{grid-template-columns:1fr}
+  h1{font-size:3.5rem}
+  .tele-strip{flex-direction:column;gap:1.5rem}
 }
 </style>
 </head>
 <body>
+<div id="cur"></div>
+<div id="cur-ring"></div>
 
 <nav>
-  <a href="#hero" class="nlogo">Wiam <em>Bouimejane</em></a>
-  <ul class="nlinks">
+  
+  <ul class="nav-links">
+    <li><a href="#exploring">Exploring</a></li>
+    <li><a href="#projects">Work</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <div class="nav-status">
+    <div class="nav-pulse"></div>
+    <span class="nav-status-text">SYS.ACTIVE</span>
+  </div>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
-  <!-- background geometry -->
-  <div class="hero-bg-geo">
-    <svg width="100%" height="100%" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="gTeal" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:#2DD4BF;stop-opacity:.18"/>
-          <stop offset="100%" style="stop-color:#2DD4BF;stop-opacity:0"/>
-        </linearGradient>
-      </defs>
-      <!-- grid dots -->
-      <g opacity=".18">
-        <circle cx="100" cy="100" r="1.2" fill="#7B8099"/>
-        <circle cx="200" cy="100" r="1.2" fill="#7B8099"/>
-        <circle cx="300" cy="100" r="1.2" fill="#7B8099"/>
-        <circle cx="400" cy="100" r="1.2" fill="#7B8099"/>
-        <circle cx="500" cy="100" r="1.2" fill="#7B8099"/>
-        <circle cx="600" cy="100" r="1.2" fill="#7B8099"/>
-        <circle cx="100" cy="200" r="1.2" fill="#7B8099"/>
-        <circle cx="200" cy="200" r="1.2" fill="#7B8099"/>
-        <circle cx="300" cy="200" r="1.2" fill="#7B8099"/>
-        <circle cx="400" cy="200" r="1.2" fill="#7B8099"/>
-        <circle cx="500" cy="200" r="1.2" fill="#7B8099"/>
-        <circle cx="600" cy="200" r="1.2" fill="#7B8099"/>
-        <circle cx="100" cy="300" r="1.2" fill="#7B8099"/>
-        <circle cx="200" cy="300" r="1.2" fill="#7B8099"/>
-        <circle cx="300" cy="300" r="1.2" fill="#7B8099"/>
-        <circle cx="400" cy="300" r="1.2" fill="#7B8099"/>
-        <circle cx="500" cy="300" r="1.2" fill="#7B8099"/>
-        <circle cx="600" cy="300" r="1.2" fill="#7B8099"/>
-        <circle cx="100" cy="400" r="1.2" fill="#7B8099"/>
-        <circle cx="200" cy="400" r="1.2" fill="#7B8099"/>
-        <circle cx="300" cy="400" r="1.2" fill="#7B8099"/>
-        <circle cx="400" cy="400" r="1.2" fill="#7B8099"/>
-        <circle cx="500" cy="400" r="1.2" fill="#7B8099"/>
-        <circle cx="600" cy="400" r="1.2" fill="#7B8099"/>
-        <circle cx="100" cy="500" r="1.2" fill="#7B8099"/>
-        <circle cx="200" cy="500" r="1.2" fill="#7B8099"/>
-        <circle cx="300" cy="500" r="1.2" fill="#7B8099"/>
-        <circle cx="400" cy="500" r="1.2" fill="#7B8099"/>
-        <circle cx="500" cy="500" r="1.2" fill="#7B8099"/>
-        <circle cx="600" cy="500" r="1.2" fill="#7B8099"/>
-      </g>
-      <!-- right side large geometry -->
-      <circle cx="950" cy="380" r="300" fill="none" stroke="#2DD4BF" stroke-width=".8" opacity=".12"/>
-      <circle cx="950" cy="380" r="220" fill="none" stroke="#2DD4BF" stroke-width=".6" opacity=".1"/>
-      <circle cx="950" cy="380" r="140" fill="none" stroke="#2DD4BF" stroke-width=".5" opacity=".08"/>
-      <circle cx="950" cy="380" r="60" fill="rgba(45,212,191,.04)" stroke="#2DD4BF" stroke-width="1" opacity=".2"/>
-      <!-- diagonal lines -->
-      <line x1="700" y1="0" x2="1200" y2="500" stroke="#252836" stroke-width="1"/>
-      <line x1="750" y1="0" x2="1200" y2="450" stroke="#252836" stroke-width=".8"/>
-      <!-- triangle accent -->
-      <polygon points="880,200 1000,120 1040,280" fill="none" stroke="#2DD4BF" stroke-width=".8" opacity=".14"/>
-      <polygon points="920,440 1060,380 1080,500" fill="rgba(45,212,191,.03)" stroke="#2DD4BF" stroke-width=".6" opacity=".15"/>
-    </svg>
-  </div>
-
-  <div class="hero-left rv">
-    <p class="hero-overline">AI &amp; Data Science — Master's Researcher</p>
-    <h1>
-      I build AI<br>
-      that does<br>
-      <span class="italic">real work.</span>
-    </h1>
-    <p class="hero-desc">
-      Master's student in Intelligent Processing Systems, Rabat.<br>
-      From <strong>TinyML on microcontrollers</strong> to <strong>LLM-driven game worlds</strong> to <strong>published research</strong> — I build systems that exist at the edge of what's possible, because that's where it gets interesting.
-    </p>
-    <div class="cta-row">
-      <a href="#projects" class="btn btn-teal">View my work</a>
-      <a href="#contact" class="btn btn-outline">Let's talk</a>
+  <div class="hero-glow"></div>
+  <div class="hero-grid">
+    <div class="hero-left">
+      
+      <h1>
+        <span class="h1-line"><span>WIAM</span></span>
+        <span class="h1-line"><span class="acid">BOUIMEJANE.</span></span>
+      </h1>
+      <p class="hero-sub">AI &amp; Data Science Engineer — Rabat, Morocco</p>
+      <p class="hero-desc">I like understanding how complex systems function, then discovering what happens when I push their constraints further. Building AI that reasons about <strong>what it actually looks at</strong> — not just the pattern it memorized. Published researcher. Curious mind, in motion.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-acid">Explore my work</a>
+        <a href="#about" class="btn btn-ghost">Get to know me</a>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div class="hstat"><span class="n">4</span><span class="l">AI Projects</span></div>
-      <div class="hstat"><span class="n">1</span><span class="l">IJCA Publication</span></div>
-      <div class="hstat"><span class="n">3</span><span class="l">Competitions</span></div>
-      <div class="hstat"><span class="n">C2</span><span class="l">English</span></div>
+    <div class="hero-right">
+     
+        </div>
+        <div class="tele-code">
+          <div>const easing = 'cubic-bezier(0.16, 1, 0.3, 1)';</div>
+          <div>const curiosity = Infinity;</div>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="hero-right rv d2">
-    <svg width="360" height="360" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
-      <!-- outer ring -->
-      <circle cx="180" cy="180" r="158" fill="none" stroke="#252836" stroke-width="1"/>
-      <circle cx="180" cy="180" r="120" fill="none" stroke="#1A1D27" stroke-width="1"/>
-      <!-- rotating dashes -->
-      <circle cx="180" cy="180" r="158" fill="none" stroke="#2DD4BF" stroke-width="1" stroke-dasharray="8 18" opacity=".3">
-        <animateTransform attributeName="transform" type="rotate" from="0 180 180" to="360 180 180" dur="30s" repeatCount="indefinite"/>
-      </circle>
-      <!-- inner hex -->
-      <polygon points="180,60 266,110 266,210 180,260 94,210 94,110" fill="rgba(45,212,191,.04)" stroke="#2DD4BF" stroke-width=".8" opacity=".3"/>
-      <!-- nodes -->
-      <circle cx="180" cy="60" r="5" fill="#2DD4BF" opacity=".9"/>
-      <circle cx="266" cy="110" r="5" fill="#2DD4BF" opacity=".7"/>
-      <circle cx="266" cy="210" r="5" fill="#2DD4BF" opacity=".7"/>
-      <circle cx="180" cy="260" r="5" fill="#2DD4BF" opacity=".9"/>
-      <circle cx="94" cy="210" r="5" fill="#2DD4BF" opacity=".7"/>
-      <circle cx="94" cy="110" r="5" fill="#2DD4BF" opacity=".7"/>
-      <!-- inner triangle -->
-      <polygon points="180,110 235,195 125,195" fill="rgba(45,212,191,.06)" stroke="#2DD4BF" stroke-width="1" opacity=".35">
-        <animateTransform attributeName="transform" type="rotate" from="0 180 180" to="-360 180 180" dur="20s" repeatCount="indefinite"/>
-      </polygon>
-      <!-- center -->
-      <circle cx="180" cy="180" r="18" fill="rgba(45,212,191,.08)" stroke="#2DD4BF" stroke-width="1.5" opacity=".6"/>
-      <circle cx="180" cy="180" r="4" fill="#2DD4BF"/>
-      <!-- spoke lines -->
-      <line x1="180" y1="162" x2="180" y2="60" stroke="#2DD4BF" stroke-width=".5" opacity=".2"/>
-      <line x1="180" y1="198" x2="180" y2="260" stroke="#2DD4BF" stroke-width=".5" opacity=".2"/>
-      <line x1="164" y1="171" x2="94" y2="110" stroke="#2DD4BF" stroke-width=".5" opacity=".2"/>
-      <line x1="196" y1="189" x2="266" y2="210" stroke="#2DD4BF" stroke-width=".5" opacity=".2"/>
-      <!-- label -->
-      <text x="180" y="310" text-anchor="middle" font-family="Epilogue,sans-serif" font-size="9" fill="#7B8099" letter-spacing="3">INTELLIGENT SYSTEMS</text>
-    </svg>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-inner">
-    <div class="about-left rv">
-      <p class="section-tag">About</p>
-      <h2>Security researcher.<br>AI builder.<br>Curious human.</h2>
-      <p style="margin-top:1.5rem">I'm Wiam — a Master's student at the Faculty of Science in Rabat.</p>
-      <p>I've trained deep learning models for video forensics, deployed quantized autoencoders on microcontrollers with less memory than a photo, published peer-reviewed research, and built NPC agents that remember your choices and judge your character. All before finishing my Master's.</p>
-      <p>I compete in programming contests because I like pressure. I tutor beginners because I remember what confusion feels like. I write code the same way — with clarity and intent.</p>
-      <p style="color:var(--mist)">English (C2) &mdash; Arabic (C1) &mdash; French (C1)</p>
+<div class="tele-strip">
+  <div class="ts-col"><span class="ts-label">RESEARCH OUTPUT</span><span class="ts-value">1</span><span class="ts-sub">IJCA PUBLICATION</span></div>
+  <div class="ts-col"><span class="ts-label">SYSTEMS BUILT</span><span class="ts-value">4+</span><span class="ts-sub">ACTIVE PROJECTS</span></div>
+  <div class="ts-col"><span class="ts-label">DATASET RECORDS</span><span class="ts-value">48K+</span><span class="ts-sub">PRIVACY AUDITOR</span></div>
+  <div class="ts-col"><span class="ts-label">DEPLOY TARGET</span><span class="ts-value">MCU</span><span class="ts-sub">TINYML EDGE</span></div>
+</div>
+
+<section id="exploring" class="section">
+  <div class="section-header rv">
+    <div class="section-badge"><div class="section-dot"></div><span class="section-num">01 / What I'm Exploring</span></div>
+    <h2 class="section-title">Questions before answers</h2>
+    <p class="section-desc">Framing technical expertise as curiosity-driven inquiries that break boundaries rather than static lines on a resume.</p>
+    <div class="section-rule"></div>
+  </div>
+  <div class="explore-grid">
+    <div class="explore-card rv d1">
+      <div class="ec-top"><span class="ec-num">01.1</span></div>
+      <div><div class="ec-title">Adversarial ML</div><div class="ec-question">"How much does a trained model know about you?"</div></div>
+      <div class="ec-body">Probing ML classifier privacy using Membership Inference Attacks and Shadow Model training to simulate adversarial data extraction.</div>
+    </div>
+    <div class="explore-card rv d2">
+      <div class="ec-top"><span class="ec-num">01.2</span></div>
+      <div><div class="ec-title">Computer Vision</div><div class="ec-question">"Can a model reason about what makes a video real?"</div></div>
+      <div class="ec-body">Building generator-agnostic detectors using Grad-CAM and frequency analysis — genuine artifact reasoning over shortcut fingerprinting.</div>
+    </div>
+    <div class="explore-card rv d3">
+      <div class="ec-top"><span class="ec-num">01.3</span></div>
+      <div><div class="ec-title">LLM Agents</div><div class="ec-question">"What happens when NPCs actually think and remember?"</div></div>
+      <div class="ec-body">Designing LangGraph cognition loops — perception, memory, reasoning, response — with persistent emotion and moral judgment systems.</div>
+    </div>
+    <div class="explore-card rv d4">
+      <div class="ec-top"><span class="ec-num">01.4</span></div>
+      <div><div class="ec-title">TinyML</div><div class="ec-question">"How small can intelligence get?"</div></div>
+      <div class="ec-body">Deploying quantized autoencoders on microcontrollers via TF Lite — anomaly detection where nobody expected a neural network to fit.</div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="section">
+  <div class="section-header rv">
+    <div class="section-badge"><div class="section-dot"></div><span class="section-num">02 / Things I've Built</span></div>
+    <h2 class="section-title">Completed Systems &amp; Experiments</h2>
+    <p class="section-desc">Each project documents what was proved. Started with a question. Ended with a working system.</p>
+    <div class="section-rule"></div>
+  </div>
+  <div class="proj-stack">
+
+    <div class="proj-featured rv">
+      <div>
+        <div class="proj-tag"><div class="proj-tag-dot"></div><span class="proj-tag-text">Featured System / Generator-Agnostic Detection</span></div>
+        <h3 class="proj-title">AI Video Detector</h3>
+        <p class="proj-subtitle">Can a model detect AI video by reasoning about artifacts, not fingerprints?</p>
+        <p class="proj-desc">Most detectors fail when a new generator appears — they learned the fingerprint, not the artifact. This targets the harder, more durable problem: detecting AI-generated video through genuine spatial and temporal artifact reasoning, regardless of source.</p>
+        <ul class="proj-buls">
+          <li>Manually curated dataset: humans, animals, landscapes, real footage with AI modifications — designed to prevent shortcut learning</li>
+          <li>Grad-CAM and frequency analysis confirm genuine artifact attention — not generator-specific noise</li>
+          <li>Systematic ablation studies; architecture optimized for artifact-level reasoning</li>
+        </ul>
+        <div class="tech-row"><span class="tech-tag">PyTorch</span><span class="tech-tag">OpenCV</span><span class="tech-tag">Grad-CAM</span><span class="tech-tag">Frequency Analysis</span><span class="tech-tag">GitHub</span></div>
+        <p class="proj-quote">"Started with a question. Ended with a working system."</p>
+      </div>
+      <div class="proj-right-tele">
+        <div class="prt-header"><span class="prt-label">[EVALUATION_METRICS]</span><span class="prt-meta">GRAD-CAM ✓</span></div>
+        <div class="prt-metrics">
+          <div class="prt-metric"><div class="prt-metric-label">INTERPRETABILITY</div><div class="prt-metric-value acid">✓</div></div>
+          <div class="prt-metric"><div class="prt-metric-label">GENERALIZES</div><div class="prt-metric-value acid">✓</div></div>
+        </div>
+        <div>
+          <div class="loss-label">ARTIFACT ATTENTION CURVE</div>
+          <div class="loss-bars">
+            <div class="loss-bar" style="height:80%;opacity:.3"></div>
+            <div class="loss-bar" style="height:68%;opacity:.4"></div>
+            <div class="loss-bar" style="height:54%;opacity:.5"></div>
+            <div class="loss-bar" style="height:42%;opacity:.6"></div>
+            <div class="loss-bar" style="height:30%;opacity:.7"></div>
+            <div class="loss-bar" style="height:20%;opacity:.78"></div>
+            <div class="loss-bar" style="height:14%;opacity:.85"></div>
+            <div class="loss-bar" style="height:9%;opacity:.9"></div>
+            <div class="loss-bar" style="height:6%;opacity:.94"></div>
+            <div class="loss-bar" style="height:3%;opacity:.97"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-secondary">
+      <div class="proj-sub rv d1">
+        <div class="ps-header"><span class="ps-run">[RUN_01]</span><span class="ps-ongoing">IN PROGRESS</span></div>
+        <div><div class="ps-title">AI Privacy Forensic Auditor</div><div class="ps-tagline">Membership Inference Attacks on ML classifiers.</div></div>
+        <p class="ps-desc">A modular forensic pipeline asking: how much does your model remember about its training data? 48K+ record preprocessing engine, reliability module with 95% confidence intervals, Shadow Model training in integration.</p>
+        <div class="tech-row"><span class="tech-tag">Python</span><span class="tech-tag">Scikit-learn</span><span class="tech-tag">MIA</span><span class="tech-tag">PCA</span></div>
+        <div class="ps-rule"></div>
+        <p class="ps-quote">"Started with a question. Ended with a working system."</p>
+      </div>
+
+      <div class="proj-sub rv d2">
+        <div class="ps-header"><span class="ps-run">[RUN_02]</span><span class="ps-meta">PUBLISHED — IJCA 2025</span></div>
+        <div><div class="ps-title">IoT Intrusion Detection — TinyML</div><div class="ps-tagline">Autoencoders deployed on microcontrollers.</div></div>
+        <div class="pub-badge"><div class="pub-dot"></div><span class="pub-text">doi: 10.5120/ijca2025926000</span></div>
+        <p class="ps-desc">Anomaly-based IDS for resource-constrained IoT devices. Quantized autoencoders via TF Lite on MCUs, NS-3 traffic simulation and attack injection with full evaluation.</p>
+        <div class="tech-row"><span class="tech-tag">TF Lite</span><span class="tech-tag">NS-3</span><span class="tech-tag">Autoencoders</span><span class="tech-tag">TinyML</span></div>
+        <div class="ps-rule"></div>
+        <p class="ps-quote">"Started with a question. Ended with a working system."</p>
+      </div>
+
+      <div class="proj-sub rv d3">
+        <div class="ps-header"><span class="ps-run">[RUN_03]</span><span class="ps-meta">COMPLETED</span></div>
+        <div><div class="ps-title">NPCs — AI-Driven 3D Game World</div><div class="ps-tagline">LLM agents with memory, emotion, moral judgment.</div></div>
+        <p class="ps-desc">LangGraph cognition loop: perception → memory → reasoning → response. Trust/emotion system (0–10), persistent LLM-summarized memory, karma/quest system reacting to player choices.</p>
+        <div class="tech-row"><span class="tech-tag">LangGraph</span><span class="tech-tag">Ollama</span><span class="tech-tag">Mistral</span><span class="tech-tag">Groq</span><span class="tech-tag">Deepgram</span></div>
+        <div class="ps-rule"></div>
+        <p class="ps-quote">"Started with a question. Ended with a working system."</p>
+      </div>
+
+      <div class="proj-sub rv d4" style="border-style:dashed;opacity:.45;justify-content:center;align-items:center;text-align:center;min-height:180px">
+        <div><div class="ps-run" style="text-align:center;margin-bottom:.6rem">[RUN_05]</div><div class="ps-title" style="opacity:.5">Next experiment loading...</div><div class="ps-desc" style="margin-top:.4rem">INITIALIZING_CORE...</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="interstitial rv">
+  <div class="inter-text">
+    <span style="color:var(--snow)">Curious enough to explore.</span>
+    <span class="acid">Technical enough to build.</span>
+    <span style="color:var(--snow)">Reflective enough to learn.</span>
+  </div>
+  <div class="inter-bar">
+    <div class="inter-line"></div>
+    <span class="inter-label">KINETIC PHYSICS STABLE</span>
+    <div class="inter-line"></div>
+  </div>
+</div>
+
+<section id="about" class="section">
+  <div class="section-header rv">
+    <div class="section-badge"><div class="section-dot"></div><span class="section-num">03 / Behind the Work</span></div>
+    <h2 class="section-title">Deep Logic, Driven by Chaos</h2>
+    <p class="section-desc">Unpacking the operational philosophy of a researcher working at the edge of what's possible.</p>
+    <div class="section-rule"></div>
+  </div>
+  <div class="about-grid">
+    <div class="rv d1">
+      <h3 class="about-h">Abstract Ideas to Tangible Code</h3>
+      <p class="about-p">First-year MSc student at the Faculty of Science, Rabat. I care about AI that can explain itself — not just models that score well on a leaderboard.</p>
+      <p class="about-p">I've deployed quantized neural networks on microcontrollers. Built NPC characters that remember your moral choices. Designed a detector that identifies AI video by reasoning about genuine artifacts. And I'm auditing ML model privacy using adversarial attack simulation.</p>
+      <p class="about-p">Outside the work: <strong>competitive programming</strong> because I like the pressure, <strong>tutoring beginners</strong> because I remember the confusion, <strong>new cafes</strong>, <strong>anime</strong>, <strong>arcade games</strong>, and too many open tabs.</p>
+      <div class="about-specimen">
+        <span class="spec-label">[OPERATIONAL STATE]</span>
+        <span class="spec-text">"Do not optimize what should not exist. Always build to verify, then profile what actually matters."</span>
+      </div>
+      <div class="edu-block">
+        <div class="edu-label">Education</div>
+        <div class="edu-row">MSc Intelligent Processing Systems — Faculty of Science, Rabat <span>2027</span></div>
+        <div class="edu-row">BSc Computer Science — Faculty of Science, Rabat <span>2025</span></div>
+      </div>
+      <div class="edu-block">
+        <div class="edu-label">Languages</div>
+        <div class="edu-row">English <span>C2</span></div>
+        <div class="edu-row">Arabic <span>C1</span></div>
+        <div class="edu-row">French <span>C1</span></div>
+      </div>
+      <div class="edu-block">
+        <div class="edu-label">Competitions</div>
+        <div class="edu-row">Game of Codes — INSEA, Rabat</div>
+        <div class="edu-row">MNPC — UM6P, Benguerir</div>
+        <div class="edu-row">Africa Science Week &amp; Tamkeen Initiative — Rabat</div>
+      </div>
     </div>
     <div class="about-right rv d2">
-      <div class="about-card">
-        <p class="ac-label">Education</p>
-        <div class="edu-row">
-          <div><div class="edu-deg">MSc Intelligent Processing Systems</div><div class="edu-inst">Faculty of Science, Rabat &mdash; In progress</div></div>
-          <div class="edu-yr">2027</div>
-        </div>
-        <div class="edu-row">
-          <div><div class="edu-deg">BSc Computer Science</div><div class="edu-inst">Faculty of Science, Rabat</div></div>
-          <div class="edu-yr">2025</div>
-        </div>
+      <div class="ar-label">CORE BEHAVIORS</div>
+      <div class="ar-behaviors">
+        <div class="ar-beh"><span class="ar-arr">→</span><span class="ar-text">take things apart to understand them</span></div>
+        <div class="ar-beh"><span class="ar-arr">→</span><span class="ar-text">turn random questions into structural code</span></div>
+        <div class="ar-beh"><span class="ar-arr">→</span><span class="ar-text">build to verify, then profile what matters</span></div>
+        <div class="ar-beh"><span class="ar-arr">→</span><span class="ar-text">learn exclusively by breaking and building</span></div>
+        <div class="ar-beh"><span class="ar-arr">→</span><span class="ar-text">change my mind when clean evidence demands</span></div>
+        <div class="ar-beh"><span class="ar-arr">→</span><span class="ar-text">compete because I like the pressure</span></div>
       </div>
-      <div class="about-card">
-        <p class="ac-label">Focus areas</p>
-        <div class="ac-items">
-          <span class="ac-item hl">TinyML</span>
-          <span class="ac-item hl">Computer Vision</span>
-          <span class="ac-item hl">IoT Security</span>
-          <span class="ac-item hl">Adversarial ML</span>
-          <span class="ac-item hl">LLM Agents</span>
-          <span class="ac-item">Anomaly Detection</span>
-          <span class="ac-item">Privacy Auditing</span>
-          <span class="ac-item">Edge AI</span>
-        </div>
-      </div>
-      <div class="about-card">
-        <p class="ac-label">Beyond the code</p>
-        <div class="ac-items">
-          <span class="ac-item">Game of Codes — INSEA</span>
-          <span class="ac-item">MNPC — UM6P</span>
-          <span class="ac-item">Africa Science Week</span>
-          <span class="ac-item">Tamkeen Initiative</span>
-          <span class="ac-item">Programming Tutor</span>
-        </div>
+      <div class="ar-rule"></div>
+      <div class="ar-status">
+        <div class="ar-status-dot"></div>
+        <span class="ar-status-text">COMPILE STATE: SUCCESSFUL</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="projects-inner">
-    <div class="proj-header rv">
-      <div>
-        <p class="section-tag">Work</p>
-        <h2 style="color:var(--white)">Projects that pushed limits.</h2>
-      </div>
-      <span class="proj-count">4 projects &mdash; 1 publication</span>
-    </div>
-
-    <div class="proj-cards">
-
-      <!-- P1: Privacy Forensic Auditor - FEATURED -->
-      <div class="pcard teal-card featured rv">
-        <div class="pvis" style="background:#0E1420">
-          <svg width="100%" height="100%" viewBox="0 0 900 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-            <!-- background subtle grid -->
-            <rect width="900" height="260" fill="#0A0E18"/>
-            <!-- concentric rings - privacy audit metaphor -->
-            <circle cx="450" cy="130" r="200" fill="none" stroke="#2DD4BF" stroke-width=".6" opacity=".1"/>
-            <circle cx="450" cy="130" r="160" fill="none" stroke="#2DD4BF" stroke-width=".6" opacity=".12"/>
-            <circle cx="450" cy="130" r="120" fill="none" stroke="#2DD4BF" stroke-width=".7" opacity=".15"/>
-            <circle cx="450" cy="130" r="80" fill="none" stroke="#2DD4BF" stroke-width=".8" opacity=".2"/>
-            <circle cx="450" cy="130" r="40" fill="rgba(45,212,191,.06)" stroke="#2DD4BF" stroke-width="1" opacity=".3"/>
-            <circle cx="450" cy="130" r="8" fill="#2DD4BF" opacity=".8"/>
-            <!-- scatter points = data nodes -->
-            <circle cx="560" cy="80" r="3" fill="#2DD4BF" opacity=".5"/>
-            <circle cx="380" cy="60" r="2.5" fill="#2DD4BF" opacity=".4"/>
-            <circle cx="620" cy="150" r="3.5" fill="#F59E0B" opacity=".5"/>
-            <circle cx="310" cy="170" r="3" fill="#2DD4BF" opacity=".4"/>
-            <circle cx="580" cy="200" r="2.5" fill="#F59E0B" opacity=".4"/>
-            <circle cx="330" cy="90" r="2" fill="#2DD4BF" opacity=".35"/>
-            <circle cx="650" cy="90" r="3" fill="#F43F5E" opacity=".4"/>
-            <circle cx="250" cy="130" r="2.5" fill="#2DD4BF" opacity=".3"/>
-            <circle cx="680" cy="190" r="2" fill="#F43F5E" opacity=".35"/>
-            <!-- lines from center to points -->
-            <line x1="450" y1="130" x2="560" y2="80" stroke="#2DD4BF" stroke-width=".5" opacity=".2"/>
-            <line x1="450" y1="130" x2="380" y2="60" stroke="#2DD4BF" stroke-width=".5" opacity=".2"/>
-            <line x1="450" y1="130" x2="620" y2="150" stroke="#F59E0B" stroke-width=".5" opacity=".2"/>
-            <line x1="450" y1="130" x2="310" y2="170" stroke="#2DD4BF" stroke-width=".5" opacity=".15"/>
-            <line x1="450" y1="130" x2="650" y2="90" stroke="#F43F5E" stroke-width=".5" opacity=".2"/>
-            <!-- left side: decision boundary concept -->
-            <path d="M 80 30 Q 150 130 80 230" fill="none" stroke="#2DD4BF" stroke-width="1" opacity=".15" stroke-dasharray="4 6"/>
-            <path d="M 110 30 Q 190 130 110 230" fill="none" stroke="#2DD4BF" stroke-width=".7" opacity=".1" stroke-dasharray="4 8"/>
-            <!-- right side bar chart - confidence intervals -->
-            <rect x="750" y="80" width="14" height="100" rx="2" fill="#2DD4BF" opacity=".15"/>
-            <rect x="772" y="60" width="14" height="120" rx="2" fill="#2DD4BF" opacity=".2"/>
-            <rect x="794" y="90" width="14" height="90" rx="2" fill="#2DD4BF" opacity=".15"/>
-            <rect x="816" y="50" width="14" height="130" rx="2" fill="#F59E0B" opacity=".2"/>
-            <rect x="838" y="100" width="14" height="80" rx="2" fill="#2DD4BF" opacity=".12"/>
-            <!-- labels -->
-            <text x="450" y="250" text-anchor="middle" font-family="Epilogue,sans-serif" font-size="8.5" fill="#2DD4BF" letter-spacing="2.5" opacity=".5">MEMBERSHIP INFERENCE · SHADOW MODELS · PRIVACY AUDIT</text>
-          </svg>
-          <span class="pvis-label" style="background:rgba(245,158,11,.12);color:#F59E0B;border:1px solid rgba(245,158,11,.25)">Adversarial ML</span>
-          <span class="pvis-status live">In progress</span>
-        </div>
-        <div class="pbody">
-          <p class="ptype" style="color:var(--teal)">Privacy &amp; Security</p>
-          <p class="ptitle">AI Privacy Forensic Auditor</p>
-          <p class="pdesc">A modular forensic pipeline that asks a sharp question: how much does your model remember about its training data? Built around Membership Inference Attacks, it systematically probes the privacy boundaries of ML classifiers.</p>
-          <ul class="pbuls">
-            <li>Preprocessing engine for 48,000+ census records — automated cleaning, PCA-based multivariate analysis</li>
-            <li>Reliability module measuring stability across 10+ stratified runs, 95% confidence intervals and calibration curves</li>
-            <li>Shadow Model training in integration — adversarial simulation to extract training data signatures</li>
-            <li>Full modular pipeline design: swap any component independently without breaking the audit chain</li>
-          </ul>
-          <div class="ptechs">
-            <span class="ptag">Python</span><span class="ptag">Scikit-learn</span><span class="ptag">MIA</span><span class="ptag">PCA</span><span class="ptag">Calibration</span><span class="ptag">GitHub</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- P2: IoT TinyML -->
-      <div class="pcard teal-card rv d1">
-        <div class="pvis" style="background:#091018">
-          <svg width="100%" height="100%" viewBox="0 0 440 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-            <rect width="440" height="200" fill="#091018"/>
-            <!-- microcontroller shape -->
-            <rect x="160" y="60" width="120" height="80" rx="4" fill="rgba(45,212,191,.05)" stroke="#2DD4BF" stroke-width="1" opacity=".4"/>
-            <!-- pins left -->
-            <line x1="140" y1="75" x2="160" y2="75" stroke="#2DD4BF" stroke-width="1.2" opacity=".5"/>
-            <line x1="140" y1="90" x2="160" y2="90" stroke="#2DD4BF" stroke-width="1.2" opacity=".5"/>
-            <line x1="140" y1="105" x2="160" y2="105" stroke="#2DD4BF" stroke-width="1.2" opacity=".5"/>
-            <line x1="140" y1="120" x2="160" y2="120" stroke="#2DD4BF" stroke-width="1.2" opacity=".4"/>
-            <line x1="140" y1="135" x2="160" y2="135" stroke="#2DD4BF" stroke-width="1.2" opacity=".3"/>
-            <!-- pins right -->
-            <line x1="280" y1="75" x2="300" y2="75" stroke="#2DD4BF" stroke-width="1.2" opacity=".5"/>
-            <line x1="280" y1="90" x2="300" y2="90" stroke="#2DD4BF" stroke-width="1.2" opacity=".5"/>
-            <line x1="280" y1="105" x2="300" y2="105" stroke="#2DD4BF" stroke-width="1.2" opacity=".4"/>
-            <line x1="280" y1="120" x2="300" y2="120" stroke="#2DD4BF" stroke-width="1.2" opacity=".4"/>
-            <line x1="280" y1="135" x2="300" y2="135" stroke="#2DD4BF" stroke-width="1.2" opacity=".3"/>
-            <!-- chip label -->
-            <text x="220" y="96" text-anchor="middle" font-family="monospace" font-size="7" fill="#2DD4BF" opacity=".6" letter-spacing="1">TF LITE</text>
-            <text x="220" y="110" text-anchor="middle" font-family="monospace" font-size="7" fill="#2DD4BF" opacity=".4" letter-spacing=".5">MCU</text>
-            <!-- signal waves right side -->
-            <path d="M 320 80 Q 340 60 360 80 Q 380 100 400 80" fill="none" stroke="#2DD4BF" stroke-width="1" opacity=".35"/>
-            <path d="M 320 100 Q 345 72 370 100 Q 395 128 420 100" fill="none" stroke="#2DD4BF" stroke-width=".8" opacity=".2"/>
-            <!-- anomaly spike -->
-            <polyline points="20,130 60,130 80,130 90,80 100,150 110,130 180,130" fill="none" stroke="#F43F5E" stroke-width="1.2" opacity=".5"/>
-            <circle cx="90" cy="80" r="3" fill="#F43F5E" opacity=".7"/>
-            <!-- bottom label -->
-            <text x="220" y="188" text-anchor="middle" font-family="Epilogue,sans-serif" font-size="8" fill="#2DD4BF" letter-spacing="2" opacity=".4">TINYML · NS-3 · EDGE DEPLOYMENT</text>
-          </svg>
-          <span class="pvis-label" style="background:var(--teal-dim);color:var(--teal);border:1px solid var(--teal-border)">IoT Security</span>
-          <span class="pvis-status">Completed</span>
-        </div>
-        <div class="pbody">
-          <a href="https://doi.org/10.5120/ijca2025926000" target="_blank" class="pub-badge">Published &mdash; IJCA 2025</a>
-          <p class="ptype" style="color:var(--teal)">Research &amp; Publication</p>
-          <p class="ptitle">Intrusion Detection in IoT using TinyML</p>
-          <p class="pdesc">Anomaly detection for devices with almost no memory. Quantized autoencoders, deployed on microcontrollers via TensorFlow Lite — and it works well enough to get published.</p>
-          <ul class="pbuls">
-            <li>Autoencoder-based anomaly detection pipeline optimized for extreme hardware constraints</li>
-            <li>Quantized neural networks deployed with TensorFlow Lite on microcontrollers</li>
-            <li>Network traffic simulation and attack injection via NS-3</li>
-          </ul>
-          <div class="ptechs">
-            <span class="ptag">Python</span><span class="ptag">TensorFlow Lite</span><span class="ptag">NS-3</span><span class="ptag">Autoencoders</span><span class="ptag">TinyML</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- P3: NPC Game World -->
-      <div class="pcard violet-card rv d2">
-        <div class="pvis" style="background:#0E0A18">
-          <svg width="100%" height="100%" viewBox="0 0 440 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-            <rect width="440" height="200" fill="#0E0A18"/>
-            <!-- nodes - NPC cognition graph -->
-            <!-- perception node -->
-            <circle cx="80" cy="100" r="22" fill="rgba(124,58,237,.1)" stroke="#7C3AED" stroke-width="1" opacity=".5"/>
-            <text x="80" y="97" text-anchor="middle" font-family="Epilogue,sans-serif" font-size="7.5" fill="#A78BFA" opacity=".8">percep</text>
-            <text x="80" y="108" text-anchor="middle" font-family="Epilogue,sans-serif" font-size="7.5" fill="#A78BFA" opacity=".8">-tion</text>
-            <!-- memory node -->
-            <circle cx="200" cy="55" r="22" fill="rgba(124,58,237,.08)" stroke="#7C3AED" stroke-width="1" opacity=".5"/>
-            <text x="200" y="59" text-anchor="middle" font-family="Epilogue,sans-serif" font-size="7.5" fill="#A78BFA" opacity=".8">memory</text>
-            <!-- reasoning node -->
-            <circle cx="280" cy="130" r="22" fill="rgba(45,212,191,.08)" stroke="#2DD4BF" stroke-width="1" opacity=".4"/>
-            <text x="280" y="127" text-anchor="middle" font-family="Epilogue,sans-serif" font-size="7" fill="#2DD4BF" opacity=".8">reason</text>
-            <text x="280" y="138" text-anchor="middle" font-family="Epilogue,sans-serif" font-size="7" fill="#2DD4BF" opacity=".8">-ing</text>
-            <!-- response node -->
-            <circle cx="390" cy="80" r="22" fill="rgba(245,158,11,.08)" stroke="#F59E0B" stroke-width="1" opacity=".4"/>
-            <text x="390" y="84" text-anchor="middle" font-family="Epilogue,sans-serif" font-size="7.5" fill="#F59E0B" opacity=".8">response</text>
-            <!-- edges -->
-            <line x1="100" y1="90" x2="180" y2="65" stroke="#7C3AED" stroke-width=".8" opacity=".3"/>
-            <line x1="100" y1="108" x2="258" y2="124" stroke="#7C3AED" stroke-width=".8" opacity=".25"/>
-            <line x1="218" y1="70" x2="264" y2="116" stroke="#2DD4BF" stroke-width=".8" opacity=".25"/>
-            <line x1="300" y1="116" x2="372" y2="92" stroke="#F59E0B" stroke-width=".8" opacity=".3"/>
-            <!-- emotion meter -->
-            <rect x="30" y="155" width="100" height="4" rx="2" fill="#1A1D27"/>
-            <rect x="30" y="155" width="72" height="4" rx="2" fill="#7C3AED" opacity=".6"/>
-            <text x="30" y="172" font-family="Epilogue,sans-serif" font-size="7.5" fill="#A78BFA" opacity=".5">trust 7.2/10</text>
-            <!-- karma badge -->
-            <rect x="350" y="152" width="60" height="22" rx="3" fill="rgba(245,158,11,.1)" stroke="#F59E0B" stroke-width=".7" opacity=".4"/>
-            <text x="380" y="166" text-anchor="middle" font-family="Epilogue,sans-serif" font-size="8" fill="#F59E0B" opacity=".7">karma +4</text>
-            <text x="220" y="192" text-anchor="middle" font-family="Epilogue,sans-serif" font-size="8" fill="#7C3AED" letter-spacing="2" opacity=".4">LANGGRAPH · LLM AGENTS · 3D WORLD</text>
-          </svg>
-          <span class="pvis-label" style="background:var(--violet-dim);color:#A78BFA;border:1px solid rgba(124,58,237,.25)">LLM Agents</span>
-          <span class="pvis-status">Completed</span>
-        </div>
-        <div class="pbody">
-          <p class="ptype" style="color:#A78BFA">Creative AI &amp; Systems</p>
-          <p class="ptitle">NPCs — AI-Driven 3D Game World</p>
-          <p class="pdesc">What if game characters actually thought? Built fully autonomous NPCs with perception, long-term memory, emotion, and moral judgment — powered by local and cloud LLMs inside a real 3D world.</p>
-          <ul class="pbuls">
-            <li>LangGraph cognition loop: perception &rarr; memory &rarr; reasoning &rarr; response, fully agentic</li>
-            <li>Trust &amp; emotion system (0&ndash;10 scale) with persistent long-term memory via LLM summarization</li>
-            <li>Quest &amp; karma system — NPC behavior and spawning react to player moral choices</li>
-          </ul>
-          <div class="ptechs">
-            <span class="ptag">LangChain</span><span class="ptag">LangGraph</span><span class="ptag">Ollama</span><span class="ptag">Mistral</span><span class="ptag">Deepgram TTS</span><span class="ptag">Groq</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- P4: AI Video Detector -->
-      <div class="pcard rose-card rv d3">
-        <div class="pvis" style="background:#130A0C">
-          <svg width="100%" height="100%" viewBox="0 0 440 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-            <rect width="440" height="200" fill="#130A0C"/>
-            <!-- film strip frames -->
-            <rect x="20" y="40" width="60" height="120" rx="3" fill="rgba(244,63,94,.04)" stroke="#F43F5E" stroke-width=".8" opacity=".3"/>
-            <rect x="90" y="40" width="60" height="120" rx="3" fill="rgba(244,63,94,.06)" stroke="#F43F5E" stroke-width=".8" opacity=".35"/>
-            <rect x="160" y="40" width="60" height="120" rx="3" fill="rgba(244,63,94,.04)" stroke="#F43F5E" stroke-width=".8" opacity=".3"/>
-            <!-- frame tick marks -->
-            <rect x="20" y="40" width="60" height="10" rx="0" fill="rgba(244,63,94,.08)"/>
-            <rect x="20" y="150" width="60" height="10" rx="0" fill="rgba(244,63,94,.08)"/>
-            <rect x="90" y="40" width="60" height="10" rx="0" fill="rgba(244,63,94,.1)"/>
-            <rect x="90" y="150" width="60" height="10" rx="0" fill="rgba(244,63,94,.1)"/>
-            <!-- center crosshair on frame 2 (flagged) -->
-            <line x1="120" y1="80" x2="120" y2="140" stroke="#F43F5E" stroke-width=".8" opacity=".5"/>
-            <line x1="90" y1="110" x2="150" y2="110" stroke="#F43F5E" stroke-width=".8" opacity=".5"/>
-            <circle cx="120" cy="110" r="12" fill="none" stroke="#F43F5E" stroke-width="1" opacity=".5"/>
-            <!-- REAL vs AI label -->
-            <rect x="28" y="105" width="30" height="10" rx="2" fill="rgba(45,212,191,.1)"/>
-            <text x="43" y="113" text-anchor="middle" font-family="monospace" font-size="6.5" fill="#2DD4BF" opacity=".8">REAL</text>
-            <rect x="168" y="105" width="28" height="10" rx="2" fill="rgba(45,212,191,.1)"/>
-            <text x="182" y="113" text-anchor="middle" font-family="monospace" font-size="6.5" fill="#2DD4BF" opacity=".8">REAL</text>
-            <!-- AI flag on middle frame -->
-            <rect x="92" y="52" width="22" height="10" rx="2" fill="rgba(244,63,94,.2)"/>
-            <text x="103" y="60" text-anchor="middle" font-family="monospace" font-size="6.5" fill="#F43F5E" opacity=".9">AI</text>
-            <!-- feature extraction lines right side -->
-            <text x="250" y="55" font-family="Epilogue,sans-serif" font-size="8.5" fill="#F43F5E" opacity=".35" letter-spacing=".5">Feature extraction</text>
-            <line x1="248" y1="62" x2="400" y2="62" stroke="#F43F5E" stroke-width=".6" opacity=".2"/>
-            <rect x="248" y="70" width="80" height="3" rx="1.5" fill="#F43F5E" opacity=".4"/>
-            <rect x="248" y="80" width="120" height="3" rx="1.5" fill="#F43F5E" opacity=".25"/>
-            <rect x="248" y="90" width="55" height="3" rx="1.5" fill="#F43F5E" opacity=".35"/>
-            <rect x="248" y="100" width="100" height="3" rx="1.5" fill="#F43F5E" opacity=".2"/>
-            <rect x="248" y="110" width="70" height="3" rx="1.5" fill="#F43F5E" opacity=".3"/>
-            <!-- confidence score -->
-            <text x="248" y="140" font-family="Epilogue,sans-serif" font-size="8" fill="#F43F5E" opacity=".45">AI-generated confidence</text>
-            <rect x="248" y="147" width="140" height="4" rx="2" fill="#1C0A0E"/>
-            <rect x="248" y="147" width="112" height="4" rx="2" fill="#F43F5E" opacity=".5"/>
-            <text x="248" y="188" text-anchor="start" font-family="Epilogue,sans-serif" font-size="8" fill="#F43F5E" letter-spacing="2" opacity=".35">PYTORCH · OPENCV · DEEP LEARNING</text>
-          </svg>
-          <span class="pvis-label" style="background:var(--rose-dim);color:#F87171;border:1px solid rgba(244,63,94,.25)">Computer Vision</span>
-          <span class="pvis-status">Completed</span>
-        </div>
-        <div class="pbody">
-          <p class="ptype" style="color:#F87171">Forensics &amp; Detection</p>
-          <p class="ptitle">Generator-Agnostic AI Video Detector</p>
-          <p class="pdesc">Most detectors fail when a new AI generator appears — they learn the generator's fingerprint, not the artifact. This project targets the harder, more durable problem: detecting AI-generated video through genuine temporal and visual artifact reasoning, regardless of source.</p>
-          <ul class="pbuls">
-            <li>Manually curated dataset spanning humans, animals, landscapes, and real footage with AI modifications — designed to prevent shortcut learning and force generalization</li>
-            <li>Model interpretability validated via Grad-CAM and frequency analysis, confirming the model attends to real artifact regions rather than generator-specific noise</li>
-            <li>End-to-end pipeline with systematic ablation studies; architecture optimized for artifact-level reasoning over superficial pattern matching</li>
-          </ul
-          <div class="ptechs">
-            <span class="ptag">Python</span><span class="ptag">PyTorch</span><span class="ptag">OpenCV</span><span class="ptag">GitHub</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
+<section id="skills" class="section">
+  <div class="section-header rv">
+    <div class="section-badge"><div class="section-dot"></div><span class="section-num">04 / Current Stack</span></div>
+    <h2 class="section-title">What is active in memory right now</h2>
+    <div class="section-rule"></div>
   </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="skills-inner">
-    <p class="section-tag rv">Capabilities</p>
-    <h2 class="rv d1">The full stack.</h2>
-    <div class="skills-layout" style="margin-top:3rem">
-      <div>
-        <div class="sk-group rv d1">
-          <p class="sk-group-title">AI &amp; Machine Learning</p>
-          <div class="sk-item"><span class="sk-name">Deep Learning</span><div class="sk-bar"><div class="sk-bar-fill" style="width:90%"></div></div><span class="sk-pct">90</span></div>
-          <div class="sk-item"><span class="sk-name">Computer Vision</span><div class="sk-bar"><div class="sk-bar-fill" style="width:85%"></div></div><span class="sk-pct">85</span></div>
-          <div class="sk-item"><span class="sk-name">TinyML / Edge AI</span><div class="sk-bar"><div class="sk-bar-fill" style="width:82%"></div></div><span class="sk-pct">82</span></div>
-          <div class="sk-item"><span class="sk-name">Anomaly Detection</span><div class="sk-bar"><div class="sk-bar-fill" style="width:87%"></div></div><span class="sk-pct">87</span></div>
-          <div class="sk-item"><span class="sk-name">LLMs &amp; Agents</span><div class="sk-bar"><div class="sk-bar-fill" style="width:78%"></div></div><span class="sk-pct">78</span></div>
-        </div>
-        <div class="sk-group rv d2" style="margin-top:2rem">
-          <p class="sk-group-title">Programming</p>
-          <div class="sk-item"><span class="sk-name">Python</span><div class="sk-bar"><div class="sk-bar-fill" style="width:95%"></div></div><span class="sk-pct">95</span></div>
-          <div class="sk-item"><span class="sk-name">C++</span><div class="sk-bar"><div class="sk-bar-fill" style="width:78%"></div></div><span class="sk-pct">78</span></div>
-          <div class="sk-item"><span class="sk-name">Java</span><div class="sk-bar"><div class="sk-bar-fill" style="width:72%"></div></div><span class="sk-pct">72</span></div>
-          <div class="sk-item"><span class="sk-name">JavaScript / Web</span><div class="sk-bar"><div class="sk-bar-fill" style="width:68%"></div></div><span class="sk-pct">68</span></div>
-          <div class="sk-item"><span class="sk-name">SQL</span><div class="sk-bar"><div class="sk-bar-fill" style="width:74%"></div></div><span class="sk-pct">74</span></div>
-        </div>
+  <div class="skills-grid">
+    <div class="rv d1">
+      <div class="sk-group">
+        <div class="sk-group-label">AI &amp; Machine Learning</div>
+        <div class="sk-row"><span class="sk-name">Deep Learning</span><div class="sk-track"><div class="sk-fill" style="width:90%"></div></div></div>
+        <div class="sk-row"><span class="sk-name">Computer Vision</span><div class="sk-track"><div class="sk-fill" style="width:85%"></div></div></div>
+        <div class="sk-row"><span class="sk-name">TinyML / Edge AI</span><div class="sk-track"><div class="sk-fill" style="width:82%"></div></div></div>
+        <div class="sk-row"><span class="sk-name">Anomaly Detection</span><div class="sk-track"><div class="sk-fill" style="width:87%"></div></div></div>
+        <div class="sk-row"><span class="sk-name">LLMs &amp; Agents</span><div class="sk-track"><div class="sk-fill" style="width:78%"></div></div></div>
+        <div class="sk-row"><span class="sk-name">Adversarial ML</span><div class="sk-track"><div class="sk-fill" style="width:74%"></div></div></div>
       </div>
-      <div class="sk-right rv d3">
-        <div class="sk-block">
-          <p class="sk-block-title">Frameworks &amp; Tools</p>
-          <div class="sk-tags">
-            <span class="sktag">TensorFlow</span><span class="sktag">PyTorch</span><span class="sktag">TF Lite</span>
-            <span class="sktag">OpenCV</span><span class="sktag">LangChain</span><span class="sktag">LangGraph</span>
-            <span class="sktag">Scikit-learn</span><span class="sktag">Git / GitHub</span>
-            <span class="sktag">NS-3</span><span class="sktag">VMware</span>
-            <span class="sktag">Cisco Packet Tracer</span>
-          </div>
-        </div>
-        <div class="sk-block">
-          <p class="sk-block-title">Networking &amp; Security</p>
-          <div class="sk-tags">
-            <span class="sktag">CCNA Certified</span><span class="sktag">IoT Systems</span>
-            <span class="sktag">Network Routing</span><span class="sktag">Intrusion Detection</span>
-            <span class="sktag">Adversarial ML</span><span class="sktag">Membership Inference</span>
-          </div>
-        </div>
-        <div class="sk-block">
-          <p class="sk-block-title">Certifications</p>
-          <div class="certs-row" style="grid-template-columns:1fr;gap:.6rem;display:flex;flex-direction:column">
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--paper3)">
-              <div><div style="font-size:.82rem;color:var(--ink-text);font-weight:500">CCNA: Enterprise Networking, Security &amp; Automation</div><div style="font-size:.72rem;color:var(--ink-muted);margin-top:2px">Cisco Networking Academy</div></div>
-              <span style="font-size:.72rem;color:var(--teal);font-weight:600;white-space:nowrap;margin-left:1rem">2024</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--paper3)">
-              <div><div style="font-size:.82rem;color:var(--ink-text);font-weight:500">Fundamentals of Deep Learning</div><div style="font-size:.72rem;color:var(--ink-muted);margin-top:2px">NVIDIA</div></div>
-              <span style="font-size:.72rem;color:var(--teal);font-weight:600;white-space:nowrap;margin-left:1rem">2024</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0">
-              <div><div style="font-size:.82rem;color:var(--ink-text);font-weight:500">Communicator Certificate</div><div style="font-size:.72rem;color:var(--ink-muted);margin-top:2px">ICCT</div></div>
-              <span style="font-size:.72rem;color:var(--teal);font-weight:600;white-space:nowrap;margin-left:1rem">2025</span>
-            </div>
-          </div>
-        </div>
+      <div class="sk-group">
+        <div class="sk-group-label">Programming</div>
+        <div class="sk-row"><span class="sk-name">Python</span><div class="sk-track"><div class="sk-fill" style="width:95%"></div></div></div>
+        <div class="sk-row"><span class="sk-name">C++</span><div class="sk-track"><div class="sk-fill" style="width:78%"></div></div></div>
+        <div class="sk-row"><span class="sk-name">Java</span><div class="sk-track"><div class="sk-fill" style="width:72%"></div></div></div>
+        <div class="sk-row"><span class="sk-name">JavaScript / Web</span><div class="sk-track"><div class="sk-fill" style="width:68%"></div></div></div>
+        <div class="sk-row"><span class="sk-name">SQL</span><div class="sk-track"><div class="sk-fill" style="width:74%"></div></div></div>
+      </div>
+    </div>
+    <div class="rv d2">
+      <div class="sk-group">
+        <div class="sk-group-label">Frameworks &amp; Tools</div>
+        <span class="tool-item">TensorFlow &amp; TF Lite</span>
+        <span class="tool-item">PyTorch</span>
+        <span class="tool-item">OpenCV</span>
+        <span class="tool-item">LangChain &amp; LangGraph</span>
+        <span class="tool-item">Scikit-learn</span>
+        <span class="tool-item">Git &amp; GitHub</span>
+        <span class="tool-item">NS-3</span>
+        <span class="tool-item">VMware &amp; Cisco Packet Tracer</span>
+      </div>
+      <div class="sk-group">
+        <div class="sk-group-label">Certifications</div>
+        <div class="cert-row"><div><div class="cert-n">CCNA: Enterprise Networking, Security &amp; Automation</div><div class="cert-o">Cisco Networking Academy</div></div><span class="cert-y">2024</span></div>
+        <div class="cert-row"><div><div class="cert-n">Fundamentals of Deep Learning</div><div class="cert-o">NVIDIA</div></div><span class="cert-y">2024</span></div>
+        <div class="cert-row"><div><div class="cert-n">Communicator Certificate</div><div class="cert-o">ICCT</div></div><span class="cert-y">2025</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-inner">
-    <div class="rv">
-      <p class="section-tag">Contact</p>
-      <h2>Let's build<br>something <em>real.</em></h2>
-      <p style="margin-top:1.2rem">Open to research collaborations, internship opportunities, and projects that sit at interesting intersections. I reply to every message.</p>
-      <div class="clinks">
-        <a href="mailto:wiambouimejane@gmail.com" class="clink">
-          <div class="clink-left">
-            <div class="clink-icon">
-              <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3,5 12,13 21,5"/></svg>
-            </div>
-            wiambouimejane@gmail.com
-          </div>
-          <span class="clink-arr">&#8599;</span>
-        </a>
-        <a href="https://github.com/ie-maie" class="clink">
-          <div class="clink-left">
-            <div class="clink-icon">
-              <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            </div>
-            github.com/ie-maie
-          </div>
-          <span class="clink-arr">&#8599;</span>
-        </a>
-        <a href="https://linkedin.com/in/wiambouimejane" class="clink">
-          <div class="clink-left">
-            <div class="clink-icon">
-              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </div>
-            LinkedIn
-          </div>
-          <span class="clink-arr">&#8599;</span>
-        </a>
-      </div>
+<section id="contact" class="section">
+  <div class="section-header rv">
+    <div class="section-badge"><div class="section-dot"></div><span class="section-num">05 / Contact &amp; Channels</span></div>
+    <h2 class="section-title">Open connection transmission</h2>
+    <p class="section-desc">Have a question about an experiment, or want to deploy a collaborative project? Ping the node.</p>
+    <div class="section-rule"></div>
+  </div>
+  <div class="contact-grid">
+    <div class="form-card rv d1">
+      <div class="form-label">ESTABLISH CONNECTION</div>
+      <form onsubmit="handleSubmit(event)">
+        <div class="form-field"><label>Identification / Name</label><input type="text" placeholder="user@identity.xyz"/></div>
+        <div class="form-field"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
+        <div class="form-field"><label>Transmission Payload / Message</label><textarea placeholder="Describe the computational problem or project query..."></textarea></div>
+        <button type="submit" class="form-submit">Transmit Payload</button>
+      </form>
     </div>
-
+    <div class="channels-card rv d2">
+      <div class="ch-label">DIRECT CHANNELS</div>
+      <div class="ch-list">
+        <div class="ch-item">
+          <div class="ch-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3,5 12,13 21,5"/></svg></div>
+          <div><div class="ch-sub">SECURE_EMAIL</div><a href="mailto:your@email.com" class="ch-val">wiambouimejane@gmail.com</a></div>
+        </div>
+        <div class="ch-item">
+          <div class="ch-icon"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div>
+          <div><div class="ch-sub">GITHUB_REPOS</div><a href="https://github.com/ie-maie" class="ch-val">github.com/yourusername</a></div>
+        </div>
+        <div class="ch-item">
+          <div class="ch-icon"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+          <div><div class="ch-sub">LINKEDIN_CORE</div><a href="https://linkedin.com/in/wiambouimejane" class="ch-val">linkedin.com/in/yourusername</a></div>
+        </div>
+      </div>
+      <div class="ch-rule"></div>
+      <p class="ch-note">Always on the hunt for complicated problems. If your team works at the high-friction boundary of machine intelligence and real-world systems, ping the node.</p>
+    </div>
   </div>
 </section>
 
 <footer>
-  <span>Wiam Bouimejane</span>
-  <span style="color:var(--fog)">AI &amp; Data Science &mdash; Rabat, Morocco &mdash; 2025</span>
+  <div class="footer-left">
+    <span class="footer-name">WIAM BOUIMEJANE</span>
+    <span class="footer-tagline">A curious mind, in motion.</span>
+  </div>
+  <div class="footer-right">
+    <span>© 2025 ALL EXPERIMENTS DOCUMENTED</span>
+    <span class="acid">V1.0.0_STABLE</span>
+  </div>
 </footer>
 
 <script>
-const obs=new IntersectionObserver(e=>{
-  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in')})
-},{threshold:.08});
+/* cursor */
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=-100,my=-100,rx=-100,ry=-100;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function tick(){rx+=(mx-rx)*.14;ry+=(my-ry)*.14;cur.style.left=mx+'px';cur.style.top=my+'px';ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(tick)})();
+document.querySelectorAll('a,button,.explore-card,.proj-sub,.proj-featured,.btn').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
+
+/* reveal */
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in')})},{threshold:.07});
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 
+/* animated tele bars */
+const widths=[16,24,32,48,64,80,96];
+setInterval(()=>{
+  document.querySelectorAll('[data-animate]').forEach(b=>{
+    b.style.width=widths[Math.floor(Math.random()*widths.length)]+'px';
+  });
+},1800);
+
+/* form */
 function handleSubmit(e){
   e.preventDefault();
-  const b=e.target.querySelector('.cf-submit');
-  b.textContent='Sent';
-  b.style.background='#14b8a6';
-  setTimeout(()=>{b.textContent='Send message';b.style.background=''},3000);
+  const b=e.target.querySelector('.form-submit');
+  b.textContent='PAYLOAD TRANSMITTED';b.style.background='#6ECC9A';b.style.color='#07080A';
+  setTimeout(()=>{b.textContent='Transmit Payload';b.style.background='';b.style.color=''},3000);
 }
 </script>
 </body>
