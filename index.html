@@ -26,7 +26,7 @@ body.hov #cur-ring{width:54px;height:54px;border-color:rgba(211,255,0,.7)}
 nav{position:fixed;inset:0 0 auto;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5vw;border-bottom:1px solid var(--border);background:rgba(7,8,10,.9);backdrop-filter:blur(20px)}
 .nav-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none}
 .nav-badge{background:var(--acid-dim);font-family:var(--mono);font-size:.62rem;font-weight:600;color:var(--acid);padding:3px 8px;border-radius:6px;letter-spacing:.05em}
-.nav-name{font-family:var(--display);font-size:1rem;font-weight:700;color:var(--snow)}
+.nav-name{font-family:var(--display);font-size:1rem;font-weight:700;color:var(--snow);font-style:italic}
 .nav-links{display:flex;gap:2rem;list-style:none}
 .nav-links a{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fog);text-decoration:none;transition:color .2s}
 .nav-links a:hover{color:var(--acid)}
@@ -44,11 +44,9 @@ nav{position:fixed;inset:0 0 auto;z-index:200;display:flex;align-items:center;ju
 
 .hero-eyebrow{display:inline-flex;align-items:center;background:var(--acid-dim);font-family:var(--mono);font-size:.68rem;font-weight:600;color:var(--acid);padding:4px 12px;border-radius:100px;letter-spacing:.08em;margin-bottom:1.5rem;opacity:0;animation:fadeUp .7s .2s ease forwards}
 @keyframes fadeUp{to{opacity:1;transform:none}}
-  /* allow the animated span to finish without clipping */
-h1 { overflow: visible; }        /* replace overflow:hidden with visible */
-.h1-line { overflow: hidden; }   /* keep masking for the slide-up animation */
-.h1-line span { display: inline-block; padding-right: 0.18rem; }
-
+h1{font-family:var(--display);font-size:clamp(4rem,10vw,9rem);font-weight:900;line-height:.9;color:var(--snow);letter-spacing:-.03em;margin-bottom:.5rem;overflow:hidden}
+.h1-line{display:block;overflow:hidden}
+.h1-line span{display:block;transform:translateY(110%);animation:slideUp .9s cubic-bezier(.16,1,.3,1) forwards}
 .h1-line:nth-child(1) span{animation-delay:.3s}
 .h1-line:nth-child(2) span{animation-delay:.45s}
 @keyframes slideUp{to{transform:translateY(0)}}
@@ -64,14 +62,15 @@ h1 { overflow: visible; }        /* replace overflow:hidden with visible */
 .btn-ghost{background:transparent;color:var(--snow);border:1px solid var(--border)}
 .btn-ghost:hover{border-color:var(--acid);color:var(--acid);transform:translateY(-2px)}
 
-.tele-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.8rem;opacity:0;animation:fadeUp .8s 1s ease forwards}
-.tele-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem}
-.tele-label{font-family:var(--mono);font-size:.6rem;color:var(--acid)}
-.tele-acc{font-family:var(--mono);font-size:.6rem;color:var(--fog)}
-.tele-vis{background:var(--raised);border-radius:8px;padding:1rem;margin-bottom:1.2rem;display:flex;flex-direction:column;gap:.5rem}
-.tele-row{display:flex;gap:.4rem}
-.tele-bar{height:8px;border-radius:2px;transition:width .8s ease}
-.tele-code{font-family:var(--mono);font-size:.62rem;color:var(--fog);line-height:1.7}
+.photo-slot{opacity:0;animation:fadeUp .8s 1s ease forwards;display:flex;flex-direction:column;gap:1rem}
+.photo-inner{width:100%;aspect-ratio:3/4;border-radius:16px;border:1px solid var(--border);overflow:hidden;position:relative;background:var(--surface)}
+.photo-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.photo-upload-label{display:flex;flex-direction:column;align-items:center;gap:.7rem;cursor:pointer;color:var(--fog);transition:color .2s;padding:2rem;text-align:center}
+.photo-upload-label:hover{color:var(--acid)}
+.photo-upload-label svg{opacity:.5}
+.photo-upload-label span{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase}
+.photo-chips{display:flex;flex-direction:column;gap:.4rem}
+.photo-chip{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fog);padding:5px 12px;border:1px solid var(--border);border-radius:100px;text-align:center}
 
 /* TELEMETRY STRIP */
 .tele-strip{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;padding:1.8rem 5vw;flex-wrap:wrap;gap:2rem}
@@ -265,21 +264,21 @@ footer{background:var(--bg);border-top:1px solid var(--border);display:flex;just
 <div id="cur-ring"></div>
 
 <nav>
-  
+  <a href="#hero" class="nav-logo">
+    <span class="nav-name">Wiam Bouimejane</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#exploring">Exploring</a></li>
     <li><a href="#projects">Work</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
- 
 </nav>
 
 <section id="hero">
   <div class="hero-glow"></div>
   <div class="hero-grid">
     <div class="hero-left">
-      
       <h1>
         <span class="h1-line"><span>WIAM</span></span>
         <span class="h1-line"><span class="acid">BOUIMEJANE.</span></span>
@@ -291,7 +290,25 @@ footer{background:var(--bg);border-top:1px solid var(--border);display:flex;just
         <a href="#about" class="btn btn-ghost">Get to know me</a>
       </div>
     </div>
-    
+    <div class="hero-right">
+      <div class="photo-slot">
+        <div class="photo-inner">
+          <img id="profile-photo" src="" alt="Wiam Bouimejane" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:16px"/>
+          <div class="photo-placeholder" id="photo-placeholder">
+            <label for="photo-upload" class="photo-upload-label">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              <span>Add your photo</span>
+              <input type="file" id="photo-upload" accept="image/*" style="display:none"/>
+            </label>
+          </div>
+        </div>
+        <div class="photo-chips">
+          <span class="photo-chip">Published — IJCA 2025</span>
+          <span class="photo-chip">MSc in progress</span>
+          <span class="photo-chip">Rabat, Morocco</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -553,15 +570,15 @@ footer{background:var(--bg);border-top:1px solid var(--border);display:flex;just
       <div class="ch-list">
         <div class="ch-item">
           <div class="ch-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3,5 12,13 21,5"/></svg></div>
-          <div><div class="ch-sub">SECURE_EMAIL</div><a href="mailto:your@email.com" class="ch-val">wiambouimejane@gmail.com</a></div>
+          <div><div class="ch-sub">SECURE_EMAIL</div><a href="mailto:your@email.com" class="ch-val">your@email.com</a></div>
         </div>
         <div class="ch-item">
           <div class="ch-icon"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div>
-          <div><div class="ch-sub">GITHUB_REPOS</div><a href="https://github.com/ie-maie" class="ch-val">github.com/yourusername</a></div>
+          <div><div class="ch-sub">GITHUB_REPOS</div><a href="https://github.com/yourusername" class="ch-val">github.com/yourusername</a></div>
         </div>
         <div class="ch-item">
           <div class="ch-icon"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
-          <div><div class="ch-sub">LINKEDIN_CORE</div><a href="https://linkedin.com/in/wiambouimejane" class="ch-val">linkedin.com/in/yourusername</a></div>
+          <div><div class="ch-sub">LINKEDIN_CORE</div><a href="https://linkedin.com/in/yourusername" class="ch-val">linkedin.com/in/yourusername</a></div>
         </div>
       </div>
       <div class="ch-rule"></div>
@@ -596,13 +613,19 @@ document.querySelectorAll('a,button,.explore-card,.proj-sub,.proj-featured,.btn'
 const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in')})},{threshold:.07});
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 
-/* animated tele bars */
-const widths=[16,24,32,48,64,80,96];
-setInterval(()=>{
-  document.querySelectorAll('[data-animate]').forEach(b=>{
-    b.style.width=widths[Math.floor(Math.random()*widths.length)]+'px';
-  });
-},1800);
+/* photo upload */
+document.getElementById('photo-upload').addEventListener('change',function(){
+  const file=this.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const img=document.getElementById('profile-photo');
+    img.src=e.target.result;
+    img.style.display='block';
+    document.getElementById('photo-placeholder').style.display='none';
+  };
+  reader.readAsDataURL(file);
+});
 
 /* form */
 function handleSubmit(e){
